@@ -95,12 +95,11 @@ INSERT INTO product VALUES('0008', '圆珠笔', '办公用品', 100, NULL, '2009
 ## 习题答案
 ```sql
 -- 1
-CREATE TABLE Addressbook 
-(
-regist_no			INTEGER				NOT NULL,
-name					VARCHAR(128)	NOT NULL,
-address				VARCHAR(128)	NOT NULL,
-tel_no				CHAR(10),
+CREATE TABLE Addressbook (
+regist_no      INTEGER		NOT NULL,
+name			VARCHAR(128)	NOT NULL,
+address		VARCHAR(128)	NOT NULL,
+tel_no		CHAR(10),
 mail_address 	CHAR(10),
 PRIMARY KEY (regist_no)
 );
