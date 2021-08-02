@@ -1,5 +1,5 @@
 # Task1 笔记
-这里我用的是MySQL，markdown似乎无法将sql语句中的一些关键词高亮，大坏
+这里我用的是MySQL+navicat，markdown似乎无法将sql语句中的一些关键词高亮，大坏
 ## 数据库的创建
 创建数据库的时候要记得设置格式，默认是latinxxx的，当数据库有中文内容的时候需要设置utf8格式，如下
 ```sql
