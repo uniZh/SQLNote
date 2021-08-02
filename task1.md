@@ -90,4 +90,27 @@ INSERT INTO product VALUES('0006', '叉子', '厨房用具', 500, NULL, '2009-09
 INSERT INTO product VALUES('0007', '擦菜板', '厨房用具', 880, 790, '2008-04-28');
 INSERT INTO product VALUES('0008', '圆珠笔', '办公用品', 100, NULL, '2009-11-11');
 ```
-**但是**，当表中已经有了数据，比如已经按插入那里的两条语句，插入了数据，再执行上面的，会报错1062 - Duplicate entry，因为主键是**唯一**的，重复插入一样的就会有错。想修改可以用update
+**但是**，当表中已经有了数据，比如已经按插入那里的两条语句，插入了数据，再执行上面的，会报错1062 - Duplicate entry，因为主键是**唯一**的，重复插入一样的就会有错。想修改可以用update。
+
+## 习题答案
+```sql
+-- 1
+CREATE TABLE Addressbook 
+(
+regist_no			INTEGER				NOT NULL,
+name					VARCHAR(128)	NOT NULL,
+address				VARCHAR(128)	NOT NULL,
+tel_no				CHAR(10),
+mail_address 	CHAR(10),
+PRIMARY KEY (regist_no)
+);
+
+-- 2
+ALTER TABLE Addressbook ADD COLUMN postal_code CHAR(8) NOT NULL;
+
+-- 3
+DROP TABLE Addressbook;
+
+-- 4
+-- 删除的表无法使用命令进行恢复，重新用语句创建表
+```
