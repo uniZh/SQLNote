@@ -64,3 +64,30 @@ UPDATE product
        purchase_price = purchase_price / 2
  WHERE product_type = '厨房用具';  
  ```
+### 插入
+```sql
+INSERT INTO product (product_id, product_name, product_type, sale_price, purchase_price, regist_date) 
+VALUES ('0006', '叉子', '厨房用具', 500, NULL, '2009-09-20');  
+
+INSERT INTO product VALUES ('0002', '打孔器', '办公用品', 500, 320, '2009-09-11');
+```
+可以使用INSERT … SELECT 语句从其他表复制数据。
+```sql
+-- 将商品表中的数据复制到商品复制表中
+INSERT INTO productocpy (product_id, product_name, product_type, sale_price, purchase_price, regist_date)
+SELECT product_id, product_name, product_type, sale_price, 
+purchase_price, regist_date
+FROM Product; 
+```
+我们假设product表现在是个空表，则可以用以下语句插入数据（教程中的例子）
+```sql
+INSERT INTO product VALUES('0001', 'T恤衫', '衣服', 1000, 500, '2009-09-20');
+INSERT INTO product VALUES('0002', '打孔器', '办公用品', 500, 320, '2009-09-11');
+INSERT INTO product VALUES('0003', '运动T恤', '衣服', 4000, 2800, NULL);
+INSERT INTO product VALUES('0004', '菜刀', '厨房用具', 3000, 2800, '2009-09-20');
+INSERT INTO product VALUES('0005', '高压锅', '厨房用具', 6800, 5000, '2009-01-15');
+INSERT INTO product VALUES('0006', '叉子', '厨房用具', 500, NULL, '2009-09-20');
+INSERT INTO product VALUES('0007', '擦菜板', '厨房用具', 880, 790, '2008-04-28');
+INSERT INTO product VALUES('0008', '圆珠笔', '办公用品', 100, NULL, '2009-11-11');
+```
+**但是**，当表中已经有了数据，比如已经按插入那里的两条语句，插入了数据，再执行上面的，会报错1062 - Duplicate entry，因为主键是**唯一**的，重复插入一样的就会有错。想修改可以用update
