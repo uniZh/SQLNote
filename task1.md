@@ -1,5 +1,6 @@
 # SQL训练营初识数据库与SQL学习笔记
 本笔记为阿里云天池龙珠计划SQL训练营的学习内容，链接为：https://tianchi.aliyun.com/specials/promotion/aicampsql
+
 这里我用的是MySQL+navicat，markdown似乎无法将sql语句中的一些关键词高亮，大坏
 ## 数据库的创建
 创建数据库的时候要记得设置格式，默认是latinxxx的，当数据库有中文内容的时候需要设置utf8格式，如下
