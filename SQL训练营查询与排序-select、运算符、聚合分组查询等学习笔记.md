@@ -119,7 +119,7 @@ MAX/MIN函数几乎适用于所有数据类型的列。SUM/AVG函数只适用于
 
 FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
 
--                        (后面会说)
+having后面会说
 ### GROUP BY语句
 之前使用聚合函数都是会整个表的数据进行处理，当你想将进行分组汇总时（即：将现有的数据按照某列来汇总统计），GROUP BY可以帮助你：
 ```sql
@@ -127,4 +127,61 @@ FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
 SELECT product_type, COUNT(*)
   FROM product
  GROUP BY product_type;
+```
+在 GROUP BY 子句中指定的列称为**聚合键**或者**分组列**
+### 聚合建中包含NULL时
+此时会将NULL作为一组特殊数据进行处理，就是除了非null的各组（行），还会多一个null组（行）
+```sql
+SELECT purchase_price, COUNT(*)
+  FROM product
+ GROUP BY purchase_price;
+```
+### 常见错误
+在使用聚合函数及GROUP BY子句时，经常出现的错误有：
+
+1.在聚合函数的SELECT子句中写了聚合健以外的列 使用COUNT等聚合函数时，SELECT子句中如果出现列名，只能是GROUP BY子句中指定的列名（也就是聚合键）。
+
+2.在GROUP BY子句中使用列的别名 SELECT子句中可以通过AS来指定别名，但在GROUP BY中不能使用别名。因为在DBMS中 ,SELECT子句在GROUP BY子句后执行。
+
+3.在WHERE中使用聚合函数 原因是聚合函数的使用前提是结果集已经确定，而WHERE还处于确定结果集的过程中，所以相互矛盾会引发错误。 如果想指定条件，可以在SELECT，HAVING（下面马上会讲）以及ORDER BY子句中使用聚合函数。
+## 为聚合键指定条件
+### 用HAVING的到特定分组
+```
+0001	T恤衫	衣服		1000	500	2009-09-20
+0002	打孔器	办公用品	500	320	2009-09-11
+0003	运动T恤	衣服		4000	2800	NULL
+0004	菜刀	厨房用具	3000	1400	2009-09-20
+0005	高压锅	厨房用具	6800	2500	2009-01-15
+0006	叉子	厨房用具	500	NULL	2009-09-20
+0007	擦菜板	厨房用具	880	395	2008-04-28
+0008	圆珠笔	办公用品	100	NULL	2009-11-11
+```
+还记得表里的数据吧，这里的我折腾过和最开始设的可能有些不同，反正是这个意思就行
+
+用GROUP BY把product_type分成了三组，衣服、办公用品、厨房用具
+
+想取出其中两组，就要用到HAVING
+
+这里WHERE不可行，因为，WHERE子句只能指定记录（行）的条件，而不能用来指定组的条件（例如，“数据行数为 2 行”或者“平均值为 500”等）。
+
+可以在GROUP BY后使用HAVING子句。
+### HAVING特点
+HAVING子句用于对分组进行过滤，可以使用数字、聚合函数和GROUP BY中指定的列名（聚合键）。
+```sql
+-- 数字
+SELECT product_type, COUNT(*)
+  FROM product
+ GROUP BY product_type
+HAVING COUNT(*) = 2;
+```
+```
+办公用品	2
+衣服		2
+```
+```sql
+-- 错误形式（因为product_name不包含在GROUP BY聚合键中）
+SELECT product_type, COUNT(*)
+  FROM product
+ GROUP BY product_type
+HAVING product_name = '圆珠笔';
 ```
