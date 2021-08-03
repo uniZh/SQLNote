@@ -62,3 +62,36 @@ SELECT product_type, sale_price, shop_name
 ```sql
 ALTER VIEW <视图名> AS <SELECT语句>
 ```
+```sql
+ALTER VIEW productSum
+    AS
+        SELECT product_type, sale_price
+          FROM Product
+         WHERE regist_date > '2009-09-11';
+```
+### 更新视图内容
+更新视图只能改变你在该视图看到的内容，更新单表视图，也会改变原表内容。
+
+举例：视图中我更新price = 100的内容为200，视图中price = 100只有A项目，原表中有A、B、C项目的price都为100。那么B和C不会被更新视图内容的操作所改变。
+
+视图只是原表的一个窗口，所以它修改也只能修改透过窗口能看到的内容。
+```sql
+UPDATE productsum
+   SET sale_price = '5000'
+ WHERE product_type = '办公用品';
+```
+因为视图是一个虚拟表，所以对视图的操作就是对底层基础表的操作，所以在修改时只有满足底层基本表的定义才能成功修改。
+
+对于一个视图来说，如果包含以下结构的任意一种都是不可以被更新的：
+
+- 聚合函数 SUM()、MIN()、MAX()、COUNT() 等。
+
+- DISTINCT 关键字。
+
+- GROUP BY 子句。
+
+- HAVING 子句。
+
+- UNION 或 UNION ALL 运算符。
+
+- FROM 子句中包含多个表。
