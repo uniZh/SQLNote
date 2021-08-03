@@ -118,3 +118,25 @@ FROM (SELECT *
                GROUP BY product_type) AS productsum
        WHERE cnt_product = 4) AS productsum2;
 ```
+### 标量子查询
+执行的SQL语句只能返回一个值，也就是要返回表中具体的某一行的某一列。
+
+通过标量子查询语句查询出销售单价高于平均销售单价的商品。
+```sql
+SELECT product_id, product_name, sale_price
+  FROM product
+ WHERE sale_price > (SELECT AVG(sale_price) FROM product);
+```
+
+### 关联子查询
+**难点**
+
+选取出各商品种类中高于该商品种类的平均销售单价的商品
+```sql
+SELECT product_type, product_name, sale_price
+  FROM product ASp1
+ WHERE sale_price > (SELECT AVG(sale_price)
+   FROM product ASp2
+                      WHERE p1.product_type =p2.product_type
+   GROUP BY product_type);
+```
