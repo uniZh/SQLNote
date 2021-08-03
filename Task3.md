@@ -136,7 +136,11 @@ SELECT product_id, product_name, sale_price
 SELECT product_type, product_name, sale_price
   FROM product ASp1
  WHERE sale_price > (SELECT AVG(sale_price)
-   FROM product ASp2
+                     FROM product ASp2
                       WHERE p1.product_type =p2.product_type
-   GROUP BY product_type);
+                     GROUP BY product_type);
 ```
+## 上面内容回顾
+最好不要对视图进行insert，
+
+当向视图中插入数据时，同时也会向原表插入数据插入数据 ，若不满足原表插入的约束条件，会无法插入
