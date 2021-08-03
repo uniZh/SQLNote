@@ -119,6 +119,10 @@ MAX/MIN函数几乎适用于所有数据类型的列。SUM/AVG函数只适用于
 
 FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
 
+书写顺序为：
+
+1.SELECT → 2. FROM → 3. WHERE → 4. GROUP BY → 5. HAVING
+
 having后面会说
 ### GROUP BY语句
 之前使用聚合函数都是会整个表的数据进行处理，当你想将进行分组汇总时（即：将现有的数据按照某列来汇总统计），GROUP BY可以帮助你：
@@ -185,3 +189,27 @@ SELECT product_type, COUNT(*)
  GROUP BY product_type
 HAVING product_name = '圆珠笔';
 ```
+## 对查询结果进行排序
+### ORDER BY
+排列默认升序，降序用DESC，如下
+```sql
+-- 降序排列
+SELECT product_id, product_name, sale_price, purchase_price
+  FROM product
+ ORDER BY sale_price DESC;
+
+-- 多个排序键
+SELECT product_id, product_name, sale_price, purchase_price
+  FROM product
+ ORDER BY sale_price, product_id;
+
+-- 当用于排序的列名中含有NULL时，NULL会在开头或末尾进行汇总。
+SELECT product_id, product_name, sale_price, purchase_price
+  FROM product
+ ORDER BY purchase_price;
+```
+多个排序键，写在前面的优先度高，比如上面的，按sale_price升序，相同放在一起，相同的按product_id升序顺序排
+### ORDER BY中可以使用别名
+这是因为SQL在使用 HAVING 子句时 SELECT 语句的执行顺序为：
+
+FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
