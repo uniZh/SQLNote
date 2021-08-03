@@ -18,11 +18,10 @@ SELECT DISTINCT product_type
 
 ## 符号相关
 ### 不等于用<>
-
 mysql中用<>与!=都是可以的，但sqlserver中不识别!=,所以建议用<>
 ### 等于用=
 ### 其他算术、比较符没什么好说的
-### AND优先级比OR高，
+### AND优先级比OR高
 举例 A or B and C == A or (B and C)
 
 但是我自己还是喜欢加()括号，你好我好大家好，逻辑清晰，谁都能看懂。
@@ -43,3 +42,89 @@ NULL的真值结果既不为真，也不为假，因为并不知道这样一个�
 三值逻辑下的AND和OR真值表为：
 
 ![cbed7c630639c6889a101d890baca23c_O1CN01TwEsH71Y9NBeHdXGF_!!6000000003016-2-tps-548-359](https://user-images.githubusercontent.com/55366350/127945869-e0bcd8de-566e-49dc-afc9-44c44b5b81b7.png)
+
+### NULL只能用IS，IS NOT判断不能用比较运算符判断
+```sql
+SELECT *
+  FROM product
+ WHERE purchase_price = NULL;
+ 
+SELECT *
+  FROM product
+ WHERE purchase_price <> NULL;
+ 
+ SELECT *
+  FROM product
+ WHERE product_name > NULL;
+```
+上面三条返回值均为空
+
+想要获得purchase_price为空，用下面语句
+```sql
+SELECT * FROM product WHERE purchase_price IS NULL;
+```
+## 聚合查询
+
+### 聚合函数
+SQL中用于汇总的函数叫做聚合函数。以下五个是最常用的聚合函数：
+
+COUNT：计算表中的记录数（行数）
+
+SUM：计算表中数值列中数据的合计值
+
+AVG：计算表中数值列中数据的平均值
+
+MAX：求出表中任意列中数据的最大值
+
+MIN：求出表中任意列中数据的最小值
+```sql
+-- 计算全部数据的行数（包含NULL）
+SELECT COUNT(*)
+  FROM product;
+	
+-- 计算NULL以外数据的行数
+SELECT COUNT(purchase_price)
+  FROM product;
+	
+-- 计算销售单价和进货单价的合计值
+SELECT SUM(sale_price), SUM(purchase_price) 
+  FROM product;
+	
+-- 计算销售单价和进货单价的平均值
+SELECT AVG(sale_price), AVG(purchase_price)
+  FROM product;
+	
+-- MAX和MIN也可用于非数值型数据
+SELECT MAX(regist_date), MIN(regist_date)
+  FROM product;
+```
+### 去除重复值
+```sql
+-- 计算去除重复数据后的数据行数
+SELECT COUNT(DISTINCT product_type)
+ FROM product;
+```
+### 常用法则
+COUNT函数的结果根据参数的不同而不同。COUNT(*)会得到包含NULL的数据行数，而COUNT(<列名>)会得到NULL之外的数据行数。
+
+聚合函数会将NULL排除在外。但COUNT(*)例外，并不会排除NULL。
+
+MAX/MIN函数几乎适用于所有数据类型的列。SUM/AVG函数只适用于数值类型的列。
+
+想要计算值的种类时，可以在COUNT函数的参数中使用DISTINCT。
+
+在聚合函数的参数中使用DISTINCT，可以删除重复数据。
+## 对表进行分组
+执行顺序为：
+
+FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
+
+-                        (后面会说)
+### GROUP BY语句
+之前使用聚合函数都是会整个表的数据进行处理，当你想将进行分组汇总时（即：将现有的数据按照某列来汇总统计），GROUP BY可以帮助你：
+```sql
+-- 按照商品种类统计数据行数
+SELECT product_type, COUNT(*)
+  FROM product
+ GROUP BY product_type;
+```
