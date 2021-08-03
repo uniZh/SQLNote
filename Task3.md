@@ -106,3 +106,15 @@ DROP VIEW <视图名1> [ , <视图名2> …]
 ```sql
 DROP VIEW productSum;
 ```
+## 子查询
+在一个查询中嵌套另一个查询
+### 嵌套子查询
+```sql
+SELECT product_type, cnt_product
+FROM (SELECT *
+        FROM (SELECT product_type, 
+                      COUNT(*) AS cnt_product
+                FROM product 
+               GROUP BY product_type) AS productsum
+       WHERE cnt_product = 4) AS productsum2;
+```
