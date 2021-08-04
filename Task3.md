@@ -144,3 +144,54 @@ SELECT product_type, product_name, sale_price
 最好不要对视图进行insert，
 
 当向视图中插入数据时，同时也会向原表插入数据插入数据 ，若不满足原表插入的约束条件，会无法插入
+
+## 各种各样的函数
+### 算术函数
+- ABS – 绝对值
+
+语法：ABS( 数值 )
+
+当 ABS 函数的参数为NULL时，返回值也是NULL
+
+- MOD – 求余数
+
+语法：MOD( 被除数，除数 )
+
+注意：主流的 DBMS 都支持 MOD 函数，只有SQL Server 不支持该函数，其使用%符号来计算余数。
+
+- ROUND – 四舍五入
+
+语法：ROUND( 对象数值，保留小数的位数 )
+
+注意：当参数 保留小数的位数 为变量时，可能会遇到错误，请谨慎使用变量。
+### 字符串函数
+- CONCAT – 拼接
+
+语法：CONCAT(str1, str2, str3)
+
+MySQL中使用 CONCAT 函数进行拼接。
+
+- LENGTH – 字符串长度
+
+语法：LENGTH( 字符串 )
+
+- LOWER – 小写转换
+
+LOWER 函数只能针对英文字母使用，它会将参数中的字符串全都转换为小写。该函数不适用于英文字母以外的场合，不影响原本就是小写的字符。
+
+类似的， UPPER 函数用于大写转换。
+
+- REPLACE – 字符串的替换
+
+语法：REPLACE( 对象字符串，替换前的字符串，替换后的字符串 )
+
+举例：REPLACE("abcSSSabc", "abc", "ABC" ) ---> ABCSSSABC
+
+- SUBSTRING – 字符串的截取
+
+语法：SUBSTRING （对象字符串 FROM 截取的起始位置 FOR 截取的字符数）
+
+使用 SUBSTRING 函数 可以截取出字符串中的一部分字符串。截取的起始位置从字符串最左侧开始计算，索引值起始为1。
+
+举例：SUBSTRING("abcdef" FROM 3 FOR 2) ----> cd
+### 日期函数
