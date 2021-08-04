@@ -298,6 +298,9 @@ WHERE purchase_price IN (320, 500, 5000);
 
 NOT IN 也可以
 ```
+注意！！！
+
+NOT IN 的参数中不能有NULL，否则会返回空值，IN参数中可以有NULL，但是不会返回有NULL的这一行
 ### EXIST 谓词
 - EXIST谓词的使用方法
 
