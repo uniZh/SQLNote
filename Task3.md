@@ -280,3 +280,51 @@ LIKE '%ddd%'表示中间有ddd的所有字符串
 使用 _（下划线）来代替 %，与 % 不同的是，它代表了“任意 1 个字符”。
 
 举例： LIKE 'ddd___'（3个下划线），表示以ddd开头，长度为6（或者理解为ddd后有任意3个字符）的字符串
+### BETWEEN
+```sql
+-- 选取销售单价为100～ 1000元的商品
+SELECT product_name, sale_price
+FROM product
+WHERE sale_price BETWEEN 100 AND 1000;
+```
+注意，是闭区间，开区间请用>、<
+### IS NULL、 IS NOT NULL – 用于判断是否为NULL
+之前讲过
+### IN谓词 – OR的简便用法
+```sql
+SELECT product_name, purchase_price
+FROM product
+WHERE purchase_price IN (320, 500, 5000);
+
+NOT IN 也可以
+```
+### EXIST 谓词
+- EXIST谓词的使用方法
+
+谓词的作用就是 “判断是否存在满足某种条件的记录”。
+
+如果存在这样的记录就返回真（TRUE），如果不存在就返回假（FALSE）。
+
+EXIST（存在）谓词的主语是“记录”。
+## CASE表达式
+```sql
+CASE WHEN <求值表达式> THEN <表达式>
+     WHEN <求值表达式> THEN <表达式>
+     WHEN <求值表达式> THEN <表达式>
+     .
+     .
+     .
+ELSE <表达式>
+END  
+```
+```sql
+SELECT  product_name,
+        CASE WHEN product_type = '衣服' THEN CONCAT('A ： ',product_type)
+             WHEN product_type = '办公用品'  THEN CONCAT('B ： ',product_type)
+             WHEN product_type = '厨房用具'  THEN CONCAT('C ： ',product_type)
+             ELSE NULL
+        END AS abc_product_type
+  FROM  product;
+```
+ELSE 子句也可以省略不写，这时会被默认为 ELSE NULL。但为了防止有人漏读，还是希望大家能够显示地写出 ELSE 子句。
+此外， CASE 表达式最后的“END”是不能省略的，请大家特别注意不要遗漏。忘记书写 END 会发生语法错误，这也是初学时最容易犯的错误。
