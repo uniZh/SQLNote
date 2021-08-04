@@ -243,7 +243,7 @@ SELECT CAST('2009-12-14' AS DATE) AS date_col;
 
 语法：COALESCE(数据1，数据2，数据3……)
 
-COALESCE 是 SQL 特有的函数。该函数会返回可变参数 A 中左侧开始第 1个不是NULL的值。参数个数是可变的，因此可以根据需要无限增加。
+COALESCE 是 SQL 特有的函数。该函数会返回可变参数 A 中左侧开始第 1个**不是NULL**的值。参数个数是可变的，因此可以根据需要无限增加。
 ```sql
 SELECT COALESCE(NULL, 11) AS col_1,
 COALESCE(NULL, 'hello world', NULL) AS col_2,
@@ -254,3 +254,29 @@ COALESCE(NULL, NULL, '2020-11-01') AS col_3;
 |    11 | hello world | 2020-11-01 |
 +-------+-------------+------------+
 ```
+## 谓词
+LIKE
+
+BETWEEN
+
+IS NULL、IS NOT NULL
+
+IN
+
+EXISTS
+### LIKE
+```sql
+SELECT *
+FROM samplelike
+WHERE strcol LIKE 'ddd%';
+```
+%代表“零个或多个任意字符串”的特殊符号，本例中代表“以ddd开头的所有字符串”
+
+LIKE '%ddd'则是表示以ddd结尾的所有字符串
+
+LIKE '%ddd%'表示中间有ddd的所有字符串
+
+- _下划线匹配任意 1 个字符
+使用 _（下划线）来代替 %，与 % 不同的是，它代表了“任意 1 个字符”。
+
+举例： LIKE 'ddd___'（3个下划线），表示以ddd开头，长度为6（或者理解为ddd后有任意3个字符）的字符串
