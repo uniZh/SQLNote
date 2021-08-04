@@ -195,3 +195,62 @@ LOWER 函数只能针对英文字母使用，它会将参数中的字符串全�
 
 举例：SUBSTRING("abcdef" FROM 3 FOR 2) ----> cd
 ### 日期函数
+```sql
+SELECT CURRENT_DATE;
+SELECT CURRENT_TIME;
+SELECT CURRENT_TIMESTAMP;
+```
+- EXTRACT – 截取日期元素
+语法：EXTRACT(日期元素 FROM 日期)
+```sql
+SELECT CURRENT_TIMESTAMP as now,
+EXTRACT(YEAR   FROM CURRENT_TIMESTAMP) AS year,
+EXTRACT(MONTH  FROM CURRENT_TIMESTAMP) AS month,
+EXTRACT(DAY    FROM CURRENT_TIMESTAMP) AS day,
+EXTRACT(HOUR   FROM CURRENT_TIMESTAMP) AS hour,
+EXTRACT(MINUTE FROM CURRENT_TIMESTAMP) AS MINute,
+EXTRACT(SECOND FROM CURRENT_TIMESTAMP) AS second;
++---------------------+------+-------+------+------+--------+--------+
+| now                 | year | month | day  | hour | MINute | second |
++---------------------+------+-------+------+------+--------+--------+
+| 2020-08-08 17:34:38 | 2020 |     8 |    8 |   17 |     34 |     38 |
++---------------------+------+-------+------+------+--------+--------+
+1 row in set (0.00 sec)
+```
+### 转换函数
+- CAST – 类型转换
+
+语法：CAST（转换前的值 AS 想要转换的数据类型）
+```sql
+-- 将字符串类型转换为数值类型
+SELECT CAST('0001' AS SIGNED INTEGER) AS int_col;
++---------+
+| int_col |
++---------+
+|       1 |
++---------+
+1 row in set (0.00 sec)
+-- 将字符串类型转换为日期类型
+SELECT CAST('2009-12-14' AS DATE) AS date_col;
++------------+
+| date_col   |
++------------+
+| 2009-12-14 |
++------------+
+1 row in set (0.00 sec)
+```
+- COALESCE – 将NULL转换为其他值
+
+语法：COALESCE(数据1，数据2，数据3……)
+
+COALESCE 是 SQL 特有的函数。该函数会返回可变参数 A 中左侧开始第 1个不是NULL的值。参数个数是可变的，因此可以根据需要无限增加。
+```sql
+SELECT COALESCE(NULL, 11) AS col_1,
+COALESCE(NULL, 'hello world', NULL) AS col_2,
+COALESCE(NULL, NULL, '2020-11-01') AS col_3;
++-------+-------------+------------+
+| col_1 | col_2       | col_3      |
++-------+-------------+------------+
+|    11 | hello world | 2020-11-01 |
++-------+-------------+------------+
+```
