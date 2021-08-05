@@ -141,3 +141,9 @@ SELECT  SP.product_id,SP.shop_id,SP.shop_name,SP.quantity
     ON SP.product_id = P.product_id
 ```
 上下两条得到的结果相同
+#### 使用自然连结还可以求出两张表或子查询的公共部分
+**但是**
+
+在进行自然连结时, 来自于 product 和 product_copy 这一行数据在进行比较时, 实际上是在逐字段进行等值连结, 回忆我们在IS NULL,IS NOT NULL的缺失值的比较方法就可得知, 两个缺失值用等号进行比较, 结果不为真. 而连结只会返回对连结条件返回为真的那些行.
+
+比如说copy和product内容完全相同，自然连结的时候，regist_date为null的就不会被显示出来
