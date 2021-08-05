@@ -172,3 +172,32 @@ FROM <tb_1> RIGHT JOIN <tb_2> ON <condition(s)>
 FROM <tb_1> FULL JOIN <tb_2> ON <condition(s)>
 ```
 关键词OUTER可以省略
+
+举例：统计每种商品分别在哪些商店有售, 需要包括那些在每个商店都没货的商品.
+```sql
+SELECT SP.shop_id
+       ,SP.shop_name
+       ,SP.product_id
+       ,P.product_name
+       ,P.sale_price
+  FROM product AS P
+  LEFT OUTER JOIN shop_product AS SP
+    ON SP.product_id = P.product_id;
+```
+```
+000A	东京	0001	T恤衫	1000
+000A	东京	0002	打孔器	500
+000A	东京	0003	运动T恤	4000
+000B	名古屋	0002	打孔器	500
+000B	名古屋	0003	运动T恤	4000
+000B	名古屋	0004	菜刀	3000
+000B	名古屋	0006	叉子	500
+000B	名古屋	0007	擦菜板	880
+000C	大阪	0003	运动T恤	4000
+000C	大阪	0004	菜刀	3000
+000C	大阪	0006	叉子	500
+000C	大阪	0007	擦菜板	880
+000D	福冈	0001	T恤衫	1000
+			高压锅	6800
+			圆珠笔	100
+```
