@@ -204,4 +204,4 @@ SELECT SP.shop_id
 - 外连结要点 1: 选取出单张表中全部的信息
 - 外连结要点 2:使用 LEFT、RIGHT 来指定主表
 
-使用 LEFT 时 FROM 子句中写在左侧的表是主表,使用 RIGHT 时右侧的表是主表
+  使用 LEFT 时 FROM 子句中写在左侧的表是主表,使用 RIGHT 时右侧的表是主表
