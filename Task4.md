@@ -157,3 +157,18 @@ NATURAL JOIN
    (SELECT product_id, product_name 
       FROM product_copy1) AS B;
 ```
+### 外连结
+左连结会保存左表中无法按照 ON 子句匹配到的行, 此时对应右表的行均为缺失值; 
+
+右连结则会保存右表中无法按照 ON 子句匹配到的行, 此时对应左表的行均为缺失值; 
+
+而全外连结则会同时保存两个表中无法按照 ON子句匹配到的行, 相应的另一张表中的行用缺失值填充.
+```sql
+-- 左连结     
+FROM <tb_1> LEFT JOIN <tb_2> ON <condition(s)>
+-- 右连结     
+FROM <tb_1> RIGHT JOIN <tb_2> ON <condition(s)>
+-- 全外连结
+FROM <tb_1> FULL JOIN <tb_2> ON <condition(s)>
+```
+关键词OUTER可以省略
