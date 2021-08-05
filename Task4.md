@@ -91,3 +91,29 @@ INNER JOIN -- 从 product 表找出衣服类商品的信息
 000C	大阪	0003	运动T恤	衣服	2800
 000D	福冈	0001	T恤衫	衣服	500
 ```
+GROUP BY 也可以用在里面
+### 自连结
+找出每个商品种类当中售价高于该类商品的平均售价的商品.
+
+上下分别是关联子查询和自连结
+```sql
+SELECT product_type, product_name, sale_price
+  FROM product AS P1
+ WHERE sale_price > (SELECT AVG(sale_price)
+                       FROM product AS P2
+                      WHERE P1.product_type = P2.product_type
+                      GROUP BY product_type);
+                      
+SELECT  P1.product_id
+       ,P1.product_name
+       ,P1.product_type
+       ,P1.sale_price
+       ,P2.avg_price
+  FROM product AS P1
+ INNER JOIN 
+   (SELECT product_type,AVG(sale_price) AS avg_price 
+      FROM product 
+     GROUP BY product_type) AS P2 
+    ON P1.product_type = P2.product_type
+ WHERE P1.sale_price > P2.avg_price;
+```
