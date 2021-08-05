@@ -128,3 +128,16 @@ SELECT  P1.product_name
 菜刀	厨房用具	3000	2795.0000	0004
 高压锅	厨房用具	6800	2795.0000	0005
 ```
+### 自然连结
+当两个表进行自然连结时, 会按照两个表中都包含的列名来进行等值内连结, 此时无需使用 ON 来指定连接条件.
+```sql
+SELECT *  FROM shopproduct NATURAL JOIN product
+
+SELECT  SP.product_id,SP.shop_id,SP.shop_name,SP.quantity
+       ,P.product_name,P.product_type,P.sale_price
+       ,P.purchase_price,P.regist_date  
+  FROM shop_product AS SP 
+ INNER JOIN product AS P 
+    ON SP.product_id = P.product_id
+```
+上下两条得到的结果相同
