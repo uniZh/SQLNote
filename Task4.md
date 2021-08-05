@@ -60,3 +60,34 @@ SELECT  SP.shop_id
  WHERE SP.shop_name = '东京'
    AND P.product_type = '衣服' ;
 ```
+实例：
+
+找出每个商店里的衣服类商品的名称及价格等信息. 希望得到如下结果:
+![3c48d7a65f610cba0c86b569b793234b_O1CN01fOWsrG1pZL75mXYuF_!!6000000005374-2-tps-577-112](https://user-images.githubusercontent.com/55366350/128287622-e384c467-4147-42c9-a28e-6c965053aff1.png)
+```sql
+-- 参考答案 1--不使用子查询
+SELECT  SP.shop_id,SP.shop_name,SP.product_id 
+       ,P.product_name, P.product_type, P.purchase_price
+  FROM shop_product  AS SP 
+ INNER JOIN product AS P 
+    ON SP.product_id = P.product_id
+ WHERE P.product_type = '衣服';
+ 
+-- 参考答案 2--使用子查询
+SELECT  SP.shop_id, SP.shop_name, SP.product_id
+       ,P.product_name, P.product_type, P.purchase_price
+  FROM shop_product AS SP 
+INNER JOIN -- 从 product 表找出衣服类商品的信息
+  (SELECT product_id, product_name, product_type, purchase_price
+     FROM product	
+    WHERE product_type = '衣服')AS P 
+   ON SP.product_id = P.product_id;
+```
+二者结果相同
+```sql
+000A	东京	0001	T恤衫	衣服	500
+000A	东京	0003	运动T恤	衣服	2800
+000B	名古屋	0003	运动T恤	衣服	2800
+000C	大阪	0003	运动T恤	衣服	2800
+000D	福冈	0001	T恤衫	衣服	500
+```
