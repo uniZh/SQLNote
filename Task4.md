@@ -97,18 +97,18 @@ GROUP BY 也可以用在里面
 
 上下分别是关联子查询和自连结
 ```sql
-SELECT product_type, product_name, sale_price
+SELECT product_name, product_type, sale_price
   FROM product AS P1
  WHERE sale_price > (SELECT AVG(sale_price)
                        FROM product AS P2
                       WHERE P1.product_type = P2.product_type
                       GROUP BY product_type);
                       
-SELECT  P1.product_id
-       ,P1.product_name
+SELECT  P1.product_name
        ,P1.product_type
        ,P1.sale_price
        ,P2.avg_price
+       ,P1.product_id
   FROM product AS P1
  INNER JOIN 
    (SELECT product_type,AVG(sale_price) AS avg_price 
@@ -116,4 +116,15 @@ SELECT  P1.product_id
      GROUP BY product_type) AS P2 
     ON P1.product_type = P2.product_type
  WHERE P1.sale_price > P2.avg_price;
+```
+```
+办公用品	打孔器	500
+衣服	运动T恤	       4000
+厨房用具	菜刀	3000
+厨房用具	高压锅	6800
+
+0002	打孔器	办公用品	500	300.0000
+0003	运动T恤	衣服	       4000	2500.0000
+0004	菜刀	厨房用具	3000	2795.0000
+0005	高压锅	厨房用具	6800	2795.0000
 ```
