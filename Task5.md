@@ -111,3 +111,5 @@ SELECT  product_type
 coalesce(success_cnt, 1)
 ```
 当success_cnt 为null值的时候，将返回1，否则将返回success_cnt的真实值
+
+### MySQL中不能使用 NULLS FIRST
