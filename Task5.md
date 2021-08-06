@@ -104,3 +104,4 @@ SELECT  product_type
   FROM product
  GROUP BY product_type, regist_date WITH ROLLUP  
 ```
+![4e9d56e711976efbfd4337a6b043e399_O1CN01a2wvRr20h5aecQ6Zq_!!6000000006880-2-tps-416-219](https://user-images.githubusercontent.com/55366350/128452863-7d509173-4681-40d0-a0e6-7abf3d4a326e.png)
