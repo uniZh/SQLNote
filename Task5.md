@@ -31,6 +31,7 @@ T恤衫	衣服	        1000	1
 擦菜板	厨房用具	880	2
 圆珠笔	办公用品	100	1
 ```
+### 专用窗口函数
 - RANK函数
 
 计算排序时，如果存在相同位次的记录，则会跳过之后的位次。
@@ -48,3 +49,46 @@ T恤衫	衣服	        1000	1
 赋予唯一的连续位次。
 
 例）有 3 条记录排在第 1 位时：1 位、2 位、3 位、4 位
+### 聚合函数在窗口函数上的使用
+```sql
+SELECT  product_id
+       ,product_name
+       ,sale_price
+       ,SUM(sale_price) OVER (ORDER BY product_id) AS current_sum
+       ,AVG(sale_price) OVER (ORDER BY product_id) AS current_avg  
+  FROM product;  
+```
+分别是从上到下求和，从上到下求平均，sum的表示每一行都是前面的price求和，avg表示每一行都是上面的求和再除以**当前**（自己动态变化）有多少行
+## 窗口函数的的应用 - 计算移动平均
+```sql
+<窗口函数> OVER (ORDER BY <排序用列名>
+                 ROWS n PRECEDING )  
+                 
+<窗口函数> OVER (ORDER BY <排序用列名>
+                 ROWS BETWEEN n PRECEDING AND n FOLLOWING)
+```
+PRECEDING（“之前”）， 将框架指定为 “截止到之前 n 行”，加上自身行
+
+FOLLOWING（“之后”）， 将框架指定为 “截止到之后 n 行”，加上自身行
+
+BETWEEN 1 PRECEDING AND 1 FOLLOWING，将框架指定为 “之前1行” + “之后1行” + “自身”
+
+示例：
+```sql
+SELECT  product_id
+       ,product_name
+       ,sale_price
+       ,AVG(sale_price) OVER (ORDER BY product_id
+                               ROWS 2 PRECEDING) AS moving_avg
+       ,AVG(sale_price) OVER (ORDER BY product_id
+                               ROWS BETWEEN 1 PRECEDING 
+                                        AND 1 FOLLOWING) AS moving_avg  
+  FROM product;
+```
+ROWS 2 PRECEDING：
+
+![01ccb5c849ce029db50a391bed1edacd_O1CN01l9qlat1JNN3u15JEj_!!6000000001016-2-tps-898-322](https://user-images.githubusercontent.com/55366350/128451095-68a67382-dbfc-4a55-8412-933257281571.png)
+
+ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING：
+
+![f7436f5d31ef9f56a0144dd52fb3a3e5_O1CN01aO6L4k1IiboQy4j3c_!!6000000000927-2-tps-920-323](https://user-images.githubusercontent.com/55366350/128451110-5aeab58f-3de5-47b2-b516-a4cae3429fbf.png)
