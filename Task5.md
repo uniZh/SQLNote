@@ -92,3 +92,15 @@ ROWS 2 PRECEDING：
 ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING：
 
 ![f7436f5d31ef9f56a0144dd52fb3a3e5_O1CN01aO6L4k1IiboQy4j3c_!!6000000000927-2-tps-920-323](https://user-images.githubusercontent.com/55366350/128451110-5aeab58f-3de5-47b2-b516-a4cae3429fbf.png)
+
+- 原则上，窗口函数只能在SELECT子句中使用。
+- 窗口函数OVER 中的ORDER BY 子句并不会影响最终结果的排序。其只是用来决定窗口函数按何种顺序计算。
+## GROUPING运算符
+常规的GROUP BY 只能得到每个分类的小计，有时候还需要计算分类的合计，可以用 ROLLUP关键字。
+```sql
+SELECT  product_type
+       ,regist_date
+       ,SUM(sale_price) AS sum_price
+  FROM product
+ GROUP BY product_type, regist_date WITH ROLLUP  
+```
