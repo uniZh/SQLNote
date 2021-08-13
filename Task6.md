@@ -30,8 +30,8 @@ SELECT  ins.TICKER_SYMBOL
        ,ins.T_COGS
        ,ins.N_INCOME
        ,MD.TICKER_SYMBOL
-			 ,MD.END_DATE
-			 ,MD.CLOSE_PRICE
+       ,MD.END_DATE
+       ,MD.CLOSE_PRICE
        ,coper.TICKER_SYMBOL
        ,coper.INDIC_NAME_EN
        ,coper.END_DATE
