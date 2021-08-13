@@ -22,6 +22,9 @@
 脚本文件名前面的序号表示用到该数据集的题目序号，例如1-7market data.sql表示第1题和第7题用到了该数据集。
 同样的，这里给大家的也是sql脚本，里面是插入数据的语句，大家只需打开后在MySQL环境中运行即可将数据导入到数据表中。
 ## 练习1
+请使用A股上市公司季度营收预测数据集《Income Statement.xls》和《Company Operating.xlsx》和《Market Data.xlsx》，以Market Data为主表，将三张表中的TICKER_SYMBOL为600383和600048的信息合并在一起。只需要显示以下字段。
+
+![}LEJZGW%3_ {I9LPNR5TW`5](https://user-images.githubusercontent.com/55366350/129331634-aaf54073-81c9-426d-b785-1ba3fec34fc9.png)
 
 ```sql
 SELECT  ins.TICKER_SYMBOL
