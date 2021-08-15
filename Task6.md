@@ -57,3 +57,19 @@ SELECT *
 FROM `winequality-red`
 WHERE pH = 3.03
 ```
+## 
+```sql
+SELECT *
+       ,SUM(SUBSTRING_INDEX(Discount_rate,':',-1)) AS discount_price
+FROM `ccf_offline_stage1_test_revised`
+WHERE Date_received BETWEEN '2016-07-01' AND '2016-7-31'
+GROUP BY Merchant_id
+ORDER BY discount_price DESC;
+
+SELECT *
+       ,COUNT(*) AS discount_times
+FROM `ccf_offline_stage1_test_revised`
+WHERE Date_received BETWEEN '2016-07-01' AND '2016-7-31'
+GROUP BY Merchant_id
+ORDER BY discount_times DESC;
+```
