@@ -1,4 +1,4 @@
-# SQL训练营综合练习题-10道经典题目学习笔记
+# SQL训练营-综合练习题-10道经典题目学习笔记
 本笔记为阿里云天池龙珠计划SQL训练营的学习内容，链接为：https://tianchi.aliyun.com/specials/promotion/aicampsql
 
 ##下载相关
@@ -53,7 +53,7 @@ WHERE MD.TICKER_SYMBOL = '600383' OR MD.TICKER_SYMBOL = '600048';
 请使用 Wine Quality Data 数据集《winequality-red.csv》，找出 pH=3.03的所有红葡萄酒，然后，对其 citric acid 进行中式排名（相同排名的下一个名次应该是下一个连续的整数值。换句话说，名次之间不应该有“间隔”）
 ```sql
 SELECT *
-		   ,DENSE_RANK() OVER (ORDER BY `citric acid`) AS ranking
+      ,DENSE_RANK() OVER (ORDER BY `citric acid`) AS ranking
 FROM `winequality-red`
 WHERE pH = 3.03
 ```
