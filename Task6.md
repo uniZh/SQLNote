@@ -21,7 +21,7 @@
 ```
 脚本文件名前面的序号表示用到该数据集的题目序号，例如1-7market data.sql表示第1题和第7题用到了该数据集。
 同样的，这里给大家的也是sql脚本，里面是插入数据的语句，大家只需打开后在MySQL环境中运行即可将数据导入到数据表中。
-## 练习1
+## 练习题1
 请使用A股上市公司季度营收预测数据集《Income Statement.xls》和《Company Operating.xlsx》和《Market Data.xlsx》，以Market Data为主表，将三张表中的TICKER_SYMBOL为600383和600048的信息合并在一起。只需要显示以下字段。
 
 ![}LEJZGW%3_ {I9LPNR5TW`5](https://user-images.githubusercontent.com/55366350/129331634-aaf54073-81c9-426d-b785-1ba3fec34fc9.png)
@@ -47,3 +47,13 @@ FROM `market data` AS MD
 WHERE MD.TICKER_SYMBOL = '600383' OR MD.TICKER_SYMBOL = '600048';
 ```
 两个inner join，条件是ticker_symbol相等
+## 练习题2
+数据来源：https://tianchi.aliyun.com/dataset/dataDetail?dataId=44
+
+请使用 Wine Quality Data 数据集《winequality-red.csv》，找出 pH=3.03的所有红葡萄酒，然后，对其 citric acid 进行中式排名（相同排名的下一个名次应该是下一个连续的整数值。换句话说，名次之间不应该有“间隔”）
+```sql
+SELECT *
+		   ,DENSE_RANK() OVER (ORDER BY `citric acid`) AS ranking
+FROM `winequality-red`
+WHERE pH = 3.03
+```
